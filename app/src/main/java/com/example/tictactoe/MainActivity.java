@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,31 +32,6 @@ public class MainActivity extends AppCompatActivity {
         txtMsg.setText("X's Turn!");
         count = 0;
         playerTurn = true;
-
-        int height = findViewById(R.id.img0).getHeight();
-        int width = findViewById(R.id.img0).getWidth();
-
-        System.out.println(height);
-        System.out.println(width);
-
-        ((ImageView)findViewById(R.id.img0)).setMaxHeight(height);
-        ((ImageView)findViewById(R.id.img0)).setMaxWidth(width);
-        ((ImageView)findViewById(R.id.img1)).setMaxHeight(height);
-        ((ImageView)findViewById(R.id.img1)).setMaxWidth(width);
-        ((ImageView)findViewById(R.id.img2)).setMaxHeight(height);
-        ((ImageView)findViewById(R.id.img2)).setMaxWidth(width);
-        ((ImageView)findViewById(R.id.img3)).setMaxHeight(height);
-        ((ImageView)findViewById(R.id.img3)).setMaxWidth(width);
-        ((ImageView)findViewById(R.id.img4)).setMaxHeight(height);
-        ((ImageView)findViewById(R.id.img4)).setMaxWidth(width);
-        ((ImageView)findViewById(R.id.img5)).setMaxHeight(height);
-        ((ImageView)findViewById(R.id.img5)).setMaxWidth(width);
-        ((ImageView)findViewById(R.id.img6)).setMaxHeight(height);
-        ((ImageView)findViewById(R.id.img6)).setMaxWidth(width);
-        ((ImageView)findViewById(R.id.img7)).setMaxHeight(height);
-        ((ImageView)findViewById(R.id.img7)).setMaxWidth(width);
-        ((ImageView)findViewById(R.id.img8)).setMaxHeight(height);
-        ((ImageView)findViewById(R.id.img8)).setMaxWidth(width);
     }
 
     public void movePlayed(View view){
@@ -79,13 +56,23 @@ public class MainActivity extends AppCompatActivity {
         switch (checkGameStatus()) {
             case 1:
                 //Player 1 Won
-                break;
+                txtMsg.setText("X Won!");
+                ((GridLayout)findViewById(R.id.gridLayout)).setVisibility(View.GONE);
+                ((Button)findViewById(R.id.btnReset)).setVisibility(View.VISIBLE);
+                return;
             case 2:
                 //Player 2 Won
-                break;
+                txtMsg.setText("O Won!");
+                ((GridLayout)findViewById(R.id.gridLayout)).setVisibility(View.GONE);
+                ((Button)findViewById(R.id.btnReset)).setVisibility(View.VISIBLE);
+                return;
             default:
                 if (count == 9) {
                     //Draw
+                    txtMsg.setText("It's a Draw!");
+                    ((GridLayout)findViewById(R.id.gridLayout)).setVisibility(View.GONE);
+                    ((Button)findViewById(R.id.btnReset)).setVisibility(View.VISIBLE);
+                    return;
                 }
         }
 
@@ -140,4 +127,26 @@ public class MainActivity extends AppCompatActivity {
         return 0;
     }
 
+    public void newGame(View view){
+        ((GridLayout)findViewById(R.id.gridLayout)).setVisibility(View.VISIBLE);
+        ((Button)findViewById(R.id.btnReset)).setVisibility(View.GONE);
+
+        txtMsg.setText("X's Turn!");
+        count = 0;
+        playerTurn = true;
+
+        for(int i=0;i<3;i++)
+            for(int j=0; j<3; j++)
+                board[i][j] = 0;
+
+        ((ImageView)findViewById(R.id.img0)).setImageResource(0);
+        ((ImageView)findViewById(R.id.img1)).setImageResource(0);
+        ((ImageView)findViewById(R.id.img2)).setImageResource(0);
+        ((ImageView)findViewById(R.id.img3)).setImageResource(0);
+        ((ImageView)findViewById(R.id.img4)).setImageResource(0);
+        ((ImageView)findViewById(R.id.img5)).setImageResource(0);
+        ((ImageView)findViewById(R.id.img6)).setImageResource(0);
+        ((ImageView)findViewById(R.id.img7)).setImageResource(0);
+        ((ImageView)findViewById(R.id.img8)).setImageResource(0);
+    }
 }
